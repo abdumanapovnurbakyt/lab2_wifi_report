@@ -1,0 +1,52 @@
+services:
+  certgen:
+    image: alpine/openssl
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        if [ ! -f /certs/server.crt ]; then
+          openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -nodes -days 30 \
+            -keyout /certs/server.key -out /certs/server.crt -subj "/CN=mosquitto" \
+            -addext "subjectAltName=DNS:mosquitto"
+        fi
+        chmod 644 /certs/server.key /certs/server.crt
+    volumes:
+      - certs:/certs
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: lab2-mosquitto
+    depends_on:
+      certgen:
+        condition: service_completed_successfully
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - certs:/mosquitto/certs:ro
+    restart: unless-stopped
+
+  iperf-server:
+    build: ./client
+    image: lab2-iperf-server
+    container_name: lab2-iperf-server
+    command: ["iperf3", "-s"]
+    restart: unless-stopped
+
+  client:
+    build: ./client
+    image: lab2-tools
+    container_name: lab2-client
+    cap_add:
+      - NET_ADMIN
+    depends_on:
+      - mosquitto
+      - iperf-server
+    volumes:
+      - ./client:/app
+      - ./results:/results
+      - certs:/certs:ro
+    command: ["sleep", "infinity"]
+
+volumes:
+  certs:

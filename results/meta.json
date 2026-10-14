@@ -1,0 +1,24 @@
+{
+  "started": "2026-10-13T06:41:06",
+  "quick": false,
+  "measure": {
+    "series": 3,
+    "iperf_seconds": 10,
+    "ping_count": 200,
+    "ping_interval_s": 0.2,
+    "mqtt_messages": 1000,
+    "mqtt_rate_per_s": 50,
+    "mqtt_drain_s": 30,
+    "mqtt_qos": [
+      0,
+      1,
+      2
+    ],
+    "connect_repeats": 30
+  },
+  "tools": {
+    "iperf3": "iperf 3.18 (cJSON 1.7.15)",
+    "ping": "ping from iputils 20240905",
+    "paho": "2.x"
+  }
+}

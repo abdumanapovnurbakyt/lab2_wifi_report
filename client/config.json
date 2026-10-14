@@ -1,0 +1,69 @@
+{
+  "levels": [
+    {
+      "name": "L0",
+      "loss_pct": 0,
+      "delay_ms": 5,
+      "jitter_ms": 1,
+      "distance_m": 1
+    },
+    {
+      "name": "L1",
+      "loss_pct": 1,
+      "delay_ms": 10,
+      "jitter_ms": 3,
+      "distance_m": 5
+    },
+    {
+      "name": "L2",
+      "loss_pct": 3,
+      "delay_ms": 20,
+      "jitter_ms": 6,
+      "distance_m": 10
+    },
+    {
+      "name": "L3",
+      "loss_pct": 10,
+      "delay_ms": 40,
+      "jitter_ms": 15,
+      "distance_m": 20
+    },
+    {
+      "name": "L4",
+      "loss_pct": 20,
+      "delay_ms": 80,
+      "jitter_ms": 30,
+      "distance_m": 30
+    }
+  ],
+  "path_loss": {
+    "p0_dbm": -40,
+    "exponent": 3.0
+  },
+  "measure": {
+    "series": 3,
+    "iperf_seconds": 10,
+    "ping_count": 200,
+    "ping_interval_s": 0.2,
+    "mqtt_messages": 1000,
+    "mqtt_rate_per_s": 50,
+    "mqtt_drain_s": 30,
+    "mqtt_qos": [
+      0,
+      1,
+      2
+    ],
+    "connect_repeats": 30
+  },
+  "nfr": {
+    "rtt_p99_ms": 300,
+    "mqtt_qos1_loss_pct": 1.0,
+    "mqtt_qos1_p99_ms": 1000,
+    "throughput_min_mbps": 1.0,
+    "connect_total_s": 3.0
+  },
+  "assumptions": {
+    "wifi_assoc_ms": 300,
+    "dhcp_ms": 200
+  }
+}
